@@ -1,1 +1,38 @@
-#
+name: "quick download helper"
+description: "downloads a file from given url to current working directory"
+inputs:
+  source-url:
+    description: 'url to download a file from'
+    required: true
+  output-path:
+    description: 'path of the output file'
+    required: true
+  output-file:
+    description: 'name of the output file'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: windows
+      if: runner.os == 'Windows'
+      working-directory: ./QF-Test
+      shell: pwsh
+      run: Invoke-WebRequest ${{}} -OutFile QF-Test-6.0.4-sfx.exe
+    
+    
+    - name: linux
+      if: runner.os == 'Linux'
+      working-directory: ./QF-Test
+      shell: bash
+      run:  |
+        wget "https://www.qfs.de/fileadmin/Webdata/pub/qftest/QF-Test-6.0.4.tar.gz"
+        mv QF-Test-6.0.4.tar.gz qftest.tar.gz
+    
+    
+    - name: macos
+      if: runner.os == 'macOS'
+      working-directory: ./QF-Test
+      shell: bash
+      run: curl -o qftest.dmg 'https://www.qfs.de/fileadmin/Webdata/pub/qftest/QF-Test-6.0.4.dmg'
+    
