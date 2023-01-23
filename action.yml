@@ -1,13 +1,13 @@
 name: "quick download helper"
 description: "downloads a file from given url to current working directory"
 inputs:
-  source-url:
+  source_url:
     description: 'url to download a file from'
     required: true
-  output-path:
+  output_path:
     description: 'path of the output file'
     required: true
-  output-file:
+  output_file:
     description: 'name of the output file'
     required: true
 
@@ -16,23 +16,21 @@ runs:
   steps:
     - name: windows
       if: runner.os == 'Windows'
-      working-directory: ./QF-Test
+      working-directory: ${{ inputs.output_file }}
       shell: pwsh
-      run: Invoke-WebRequest ${{}} -OutFile QF-Test-6.0.4-sfx.exe
+      run: Invoke-WebRequest ${{ inputs.source_url }} -OutFile ${{ inputs.output_file }}
     
     
     - name: linux
       if: runner.os == 'Linux'
-      working-directory: ./QF-Test
+      working-directory: ${{ inputs.output_file }}
       shell: bash
-      run:  |
-        wget "https://www.qfs.de/fileadmin/Webdata/pub/qftest/QF-Test-6.0.4.tar.gz"
-        mv QF-Test-6.0.4.tar.gz qftest.tar.gz
+      run: curl -o ${{ inputs.output_file }} ${{ inputs.source_url }}
     
     
     - name: macos
       if: runner.os == 'macOS'
-      working-directory: ./QF-Test
+      working-directory: ${{ inputs.output_file }}
       shell: bash
-      run: curl -o qftest.dmg 'https://www.qfs.de/fileadmin/Webdata/pub/qftest/QF-Test-6.0.4.dmg'
+      run: curl -o ${{ inputs.output_file }} ${{ inputs.source_url }}
     
