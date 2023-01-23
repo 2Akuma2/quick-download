@@ -16,21 +16,21 @@ runs:
   steps:
     - name: windows
       if: runner.os == 'Windows'
-      working-directory: ${{ inputs.output_file }}
+      working-directory: ${{ inputs.output_path }}
       shell: pwsh
       run: Invoke-WebRequest ${{ inputs.source_url }} -OutFile ${{ inputs.output_file }}
     
     
     - name: linux
       if: runner.os == 'Linux'
-      working-directory: ${{ inputs.output_file }}
+      working-directory: ${{ inputs.output_path }}
       shell: bash
       run: curl -o ${{ inputs.output_file }} ${{ inputs.source_url }}
     
     
     - name: macos
       if: runner.os == 'macOS'
-      working-directory: ${{ inputs.output_file }}
+      working-directory: ${{ inputs.output_path }}
       shell: bash
       run: curl -o ${{ inputs.output_file }} ${{ inputs.source_url }}
     
